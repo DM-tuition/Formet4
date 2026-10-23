@@ -596,7 +596,7 @@ dialog::backdrop{background:var(--scrim);-webkit-backdrop-filter:blur(4px);backd
 
 .no1{position:relative;padding-top:96px}
 .no1__track{position:relative}
-.m-on .no1__track{height:340vh}
+.m-on .no1__track{height:200vh}
 .no1__pin{position:relative;height:100vh;overflow:hidden}
 @supports (height:100svh){.no1__pin{height:100svh}}
 .m-on .no1__pin{position:sticky;top:0}
@@ -1189,7 +1189,7 @@ html.is-ready:not(.rm) .hero3__foot>*{animation-delay:2.05s}
     <h2 class="sr" id="no1-h">Formet is the 1 — the No. 1 Raglan</h2>
     <div class="no1__track" id="no1-track">
       <div class="no1__pin" id="no1-pin">
-        <div class="no1__photo" id="no1-photo"><img class="no1__img" id="no1-img" src="assets/img/no1-pair.jpg" width="1066" height="1600" loading="lazy" decoding="async" alt="The No. 1 Raglan in navy on a rail, back and front: FORMET, is the, 1 and MCR down the back, the damask on the chest."></div>
+        <div class="no1__photo" id="no1-photo"><img class="no1__img" id="no1-img" src="assets/img/no1-pair-hd.jpg" width="2048" height="3075" loading="lazy" decoding="async" alt="The No. 1 Raglan in navy on a rail, back and front: FORMET, is the, 1 and MCR down the back, the damask on the chest."></div>
         <svg class="no1__sheet" id="no1-sheet" aria-hidden="true" focusable="false">
           <defs>
             <mask id="no1-mask" maskUnits="userSpaceOnUse" x="-20000" y="-20000" width="40000" height="40000">
@@ -2908,7 +2908,7 @@ void main(){
   cv.setAttribute('aria-hidden', 'true');
 
   const size = () => {
-    dpr = Math.min(devicePixelRatio || 1, 1.5);
+    dpr = Math.min(devicePixelRatio || 1, 2);
     W = Math.max(1, Math.round(pin.clientWidth * dpr)); H = Math.max(1, Math.round(pin.clientHeight * dpr));
     if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
     gl.viewport(0, 0, W, H);
@@ -3281,9 +3281,10 @@ function build(c, ctx) {
     const z = { s: 1 };
     const endBox = $('.no1__end'), end = $$('.no1__end > *'), kick = $$('.no1__kicker > *');
     /* scrub 1.2: the timeline eases towards the scroll position instead of jumping to it, so a fast
-       flick still plays every step of the dive (the track is also longer in formet 4: 340vh) */
+       flick still plays every step of the dive (the track is 200vh: a short, dense dive) */
     gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: n1, start: 'top top', end: 'bottom bottom', scrub: 1.2, invalidateOnRefresh: true, onRefresh: () => FM.no1Layout() } })
-      .fromTo('#no1-photo', { scale: 1.3 }, { scale: 1, duration: 1 }, 0)
+      /* a gentle settle (1.12, not 1.3): the photo is never blown up past its own pixels */
+      .fromTo('#no1-photo', { scale: 1.12 }, { scale: 1, duration: 1 }, 0)
       .fromTo(kick, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -20, duration: 0.1, stagger: 0.02 }, 0.08)
       .fromTo(z, { s: 1 }, { s: 64, duration: 0.66, ease: 'expo.in', onUpdate: () => FM.no1Zoom(z.s) }, 0.12)
       .fromTo(endBox, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72)
