@@ -605,6 +605,9 @@ dialog::backdrop{background:var(--scrim);-webkit-backdrop-filter:blur(4px);backd
 .no1__gl{pointer-events:none}
 .no1__sheet{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible}
 .no1__fill{fill:var(--g-bg);transition:fill .3s cubic-bezier(.7,0,.3,1)}
+/* the stencil is only as big as the screen: Safari rasterises a mask at its full size, so a huge
+   one came out at a fraction of the display's resolution and the type looked pixelated */
+.no1__sheet,.no1__sheet text{text-rendering:geometricPrecision;shape-rendering:geometricPrecision}
 .no1__line{fill:none;stroke:var(--no1-line);stroke-width:1.25px}
 .no1__line *{vector-effect:non-scaling-stroke}
 .no1__t1{font-family:var(--font);font-weight:800;letter-spacing:-.025em}
@@ -1192,8 +1195,8 @@ html.is-ready:not(.rm) .hero3__foot>*{animation-delay:2.05s}
         <div class="no1__photo" id="no1-photo"><img class="no1__img" id="no1-img" src="assets/img/no1-pair-hd.jpg" width="2048" height="3075" loading="lazy" decoding="async" alt="The No. 1 Raglan in navy on a rail, back and front: FORMET, is the, 1 and MCR down the back, the damask on the chest."></div>
         <svg class="no1__sheet" id="no1-sheet" aria-hidden="true" focusable="false">
           <defs>
-            <mask id="no1-mask" maskUnits="userSpaceOnUse" x="-20000" y="-20000" width="40000" height="40000">
-              <rect x="-20000" y="-20000" width="40000" height="40000" fill="#fff"/>
+            <mask id="no1-mask" maskUnits="userSpaceOnUse" x="-1%" y="-1%" width="102%" height="102%">
+              <rect x="-1%" y="-1%" width="102%" height="102%" fill="#fff"/>
               <g id="no1-type" fill="#000">
                 <text class="no1__t1" text-anchor="middle">FORMET</text>
                 <text class="no1__t2" text-anchor="middle">is the</text>
@@ -1202,7 +1205,7 @@ html.is-ready:not(.rm) .hero3__foot>*{animation-delay:2.05s}
               </g>
             </mask>
           </defs>
-          <rect class="no1__fill" x="-20000" y="-20000" width="40000" height="40000" mask="url(#no1-mask)"/>
+          <rect class="no1__fill" x="-1%" y="-1%" width="102%" height="102%" mask="url(#no1-mask)"/>
           <g id="no1-line" class="no1__line">
             <text class="no1__t1" text-anchor="middle">FORMET</text>
             <text class="no1__t2" text-anchor="middle">is the</text>
